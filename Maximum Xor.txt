@@ -1,0 +1,42 @@
+package com.hackerearth.druva;
+
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class MaximumXOR
+{
+    public static void main(String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+
+        int T = scanner.nextInt();
+        for (int t = 0; t < T; t++) {
+            long N = scanner.nextLong();
+            long highBit = Long.highestOneBit(N);
+            long xor = highBit ^ N;
+            if (xor == 0) {
+                pw.println(N - 1 + " " + N);
+            } else {
+                long max = getMax(highBit);
+                pw.println(max + " " + xor * 2);
+            }
+        }
+
+        scanner.close();
+        pw.close();
+    }
+
+    private static long getMax(long highBit)
+    {
+        long toReturn = highBit;
+        while (highBit > 1) {
+            highBit = highBit >> 1;
+            toReturn |= highBit;
+        }
+        return toReturn;
+    }
+}
